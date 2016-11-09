@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Media Bias/Fact Check Popup</title>
+    <style>
+      html {
+        width: 400px;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+    </style>
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+     -->
+    <script src="getTabSource.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+    <h1 id="bias"></h1>
+    <p id="description"></p>
+    <h2 id="name"></h2>
+    <p id="notes"></p>
+    <ul>
+      <li>
+        <a id="homepage" href="">Homepage</a>
+      </li>
+      <li>
+        <a id="more-info" href="">More info on MBFC</a>
+      </li>
+    </ul>
+  </body>
+</html>
+
