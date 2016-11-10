@@ -40,9 +40,9 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
   }
 });
 
-chrome.tabs.onUpdated.addListener(function (id, changeInfo, tab) {
-  if (changeInfo.url !== undefined) {
-    getTabSource(changeInfo.url, function (source, bias) {
+var tabListener = function (tab) {
+  if (tab.url !== undefined) {
+    getTabSource(tab.url, function (source, bias) {
       var path = '/icon.png';
       if (source === undefined || bias === undefined) {
         chrome.browserAction.disable(tab.id);
@@ -89,4 +89,12 @@ chrome.tabs.onUpdated.addListener(function (id, changeInfo, tab) {
       });
     });
   }
+}
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  tabListener(tab);
+});
+
+chrome.tabs.onActivated.addListener(function (ids) {
+  chrome.tabs.get(ids.tabId, tabListener);
 });
