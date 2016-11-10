@@ -45,7 +45,7 @@ var tabListener = function (tab) {
     getTabSource(tab.url, function (source, bias) {
       var path = '/icon.png';
       if (source === undefined || bias === undefined) {
-        chrome.browserAction.disable(tab.id);
+        chrome.pageAction.hide(tab.id);
       } else {
         path = '/icons/';
         switch (source.bias) {
@@ -77,13 +77,13 @@ var tabListener = function (tab) {
             break;
         }
         path += '.png';
-        chrome.browserAction.enable(tab.id);
-        chrome.browserAction.setTitle({
+        chrome.pageAction.show(tab.id);
+        chrome.pageAction.setTitle({
           title: bias.name,
           tabId: tab.id
         });
       }
-      chrome.browserAction.setIcon({
+      chrome.pageAction.setIcon({
         path: path,
         tabId: tab.id
       });

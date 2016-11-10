@@ -3,13 +3,13 @@
 
   "name": "Media Bias/Fact Check Icon",
   "description": "This extension shows an icon denoting the political bias for the current page.",
-  "version": "1.0.1",
+  "version": "1.0.2",
 
   "background": {
     "scripts": ["getTabSource.js", "eventPage.js"],
     "persistent": false
   },
-  "browser_action": {
+  "page_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
     "default_title": "MBFC"
