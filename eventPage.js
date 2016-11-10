@@ -4,7 +4,7 @@ var getFile = function (type) {
     if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
       var obj = {}
       obj[type] = JSON.parse(xhr.responseText)
-      chrome.storage.local.set(obj);
+      browser.storage.local.set(obj);
     }
   };
   xhr.open('GET', 'http://jeffreyatw.com/static/mbfc/' + type + '.json', true);
@@ -24,17 +24,17 @@ var update = function () {
   getBiases();
 }
 
-chrome.storage.local.get(['biases', 'sources'], function (items) {
+browser.storage.local.get(['biases', 'sources'], function (items) {
   if (items.sources === undefined || items.biases === undefined) {
     update();
   }
 });
 
-chrome.alarms.create('updater', {
+browser.alarms.create('updater', {
   periodInMinutes: 1440
 });
 
-chrome.alarms.onAlarm.addListener(function (alarm) {
+browser.alarms.onAlarm.addListener(function (alarm) {
   if (alarm.name === 'updater') {
     update();
   }
@@ -45,7 +45,7 @@ var tabListener = function (tab) {
     getTabSource(tab.url, function (source, bias) {
       var path = '/icon.png';
       if (source === undefined || bias === undefined) {
-        chrome.pageAction.hide(tab.id);
+        browser.pageAction.hide(tab.id);
       } else {
         path = '/icons/';
         switch (source.bias) {
@@ -77,13 +77,13 @@ var tabListener = function (tab) {
             break;
         }
         path += '.png';
-        chrome.pageAction.show(tab.id);
-        chrome.pageAction.setTitle({
+        browser.pageAction.show(tab.id);
+        browser.pageAction.setTitle({
           title: bias.name,
           tabId: tab.id
         });
       }
-      chrome.pageAction.setIcon({
+      browser.pageAction.setIcon({
         path: path,
         tabId: tab.id
       });
@@ -91,10 +91,10 @@ var tabListener = function (tab) {
   }
 }
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   tabListener(tab);
 });
 
-chrome.tabs.onActivated.addListener(function (ids) {
-  chrome.tabs.get(ids.tabId, tabListener);
+browser.tabs.onActivated.addListener(function (ids) {
+  browser.tabs.get(ids.tabId, tabListener);
 });

@@ -9,7 +9,7 @@ var getHostName = function (url) {
 }
 
 var getTabSource = function (url, cb) {
-  chrome.storage.local.get(['biases', 'sources'], function (items) {
+  browser.storage.local.get(['biases', 'sources'], function (items) {
     var domain = getHostName(url);
     var source = items.sources[domain];
     if (source !== undefined) {
