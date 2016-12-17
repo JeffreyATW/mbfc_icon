@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Media Bias/Fact Check Icon",
+  "name": "Official Media Bias Fact Check Icon",
   "description": "This extension shows an icon denoting the political bias for the current page.",
-  "version": "1.1.1",
+  "version": "1.1.2",
 
   "background": {
     "scripts": ["browser.js", "getTabSource.js", "eventPage.js"],
