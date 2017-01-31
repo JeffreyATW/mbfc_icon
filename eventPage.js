@@ -75,6 +75,9 @@ var tabListener = function (tab) {
           case 'satire':
             path += 'satire';
             break;
+          case 'fake-news':
+            path += 'fake-news';
+            break;
         }
         path += '.png';
         browser.pageAction.show(tab.id);
