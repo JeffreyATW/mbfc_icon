@@ -11,17 +11,16 @@ var getFile = function (type) {
   xhr.send();
 }
 
-var getSources = function () {
-  getFile('sources');
-}
-
-var getBiases = function () {
-  getFile('biases');
-}
-
 var update = function () {
-  getSources();
-  getBiases();
+  browser.storage.local.get('lastUpdated', function (items) {
+    if (items.lastUpdated === undefined || Date.now() - items.lastUpdated > 86400000) {
+      getFile('sources');
+      getFile('biases');
+      browser.storage.local.set({
+        lastUpdated: Date.now()
+      });
+    }
+  });
 }
 
 browser.storage.local.get(['biases', 'sources'], function (items) {
@@ -31,7 +30,7 @@ browser.storage.local.get(['biases', 'sources'], function (items) {
 });
 
 browser.alarms.create('updater', {
-  periodInMinutes: 1440
+  periodInMinutes: 1
 });
 
 browser.alarms.onAlarm.addListener(function (alarm) {
