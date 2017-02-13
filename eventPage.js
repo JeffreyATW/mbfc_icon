@@ -12,8 +12,13 @@ var getFile = function (type) {
 }
 
 var update = function () {
-  browser.storage.local.get('lastUpdated', function (items) {
-    if (items.lastUpdated === undefined || Date.now() - items.lastUpdated > 86400000) {
+  browser.storage.local.get(['biases', 'lastUpdated', 'sources'], function (items) {
+    if (
+      items.lastUpdated === undefined ||
+      Date.now() - items.lastUpdated > 86400000 ||
+      items.biases === undefined ||
+      items.sources === undefined
+    ) {
       getFile('sources');
       getFile('biases');
       browser.storage.local.set({
