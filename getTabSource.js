@@ -33,8 +33,8 @@ var getTabSource = function (url, cb) {
             if (domainSources[i].path === '/' && source === undefined) {
               source = domainSources[i];
             } else {
-              // check for source's path in current path
-              if (path.indexOf(domainSources[i].path) > -1) {
+              // check for source's path at beginning of current path
+              if (path.indexOf(domainSources[i].path) === 0) {
                 source = domainSources[i];
                 // we found it, no need to iterate further
                 break;
