@@ -24,7 +24,7 @@ var getTabSource = function (url, cb) {
     if (items.biases !== undefined && items.sources !== undefined) {
       domainSources = items.sources[domain];
       // check if value is an array or object
-      if (domainSources.length) {
+      if (domainSources && domainSources.length) {
         // if array has more than one value
         if (domainSources.length > 1) {
           // iterate
@@ -48,7 +48,7 @@ var getTabSource = function (url, cb) {
           source = domainSources[0];
         }
       } else {
-        // not an array, must be slurping old JSON
+        // not an array, must be undefined or slurping old JSON
         source = domainSources;
       }
       if (source !== undefined) {

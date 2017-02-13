@@ -17,7 +17,6 @@
   "permissions": [
     "alarms",
     "storage",
-    "tabs",
-    "http://*.jeffreyatw.com/"
+    "tabs"
   ]
 }
