@@ -44,56 +44,115 @@ browser.alarms.onAlarm.addListener(function (alarm) {
   }
 });
 
+function convertScoreToColor(score) {
+  if (score > 80) return "#009e73";
+  if (score > 70) return "#cc79a7";
+  if (score <= 70) return "#d55e00";
+}
+
+function getImageData(text, color) {
+  var canvas = document.getElementById('canvas') ||
+      document.createElement('canvas');
+  canvas.id = 'canvas';
+
+  var ctx = canvas.getContext("2d", {alpha: false});
+  ctx.height = 48;
+  ctx.width = 48;
+  ctx.font = "condensed bolder 36px tahoma";
+
+
+  ctx.fillStyle = color
+  ctx.fillRect(0, 0, ctx.width, ctx.height);
+
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText(text, ctx.width/2, 3*ctx.height/4, 46);
+
+  return ctx.getImageData(0, 0, ctx.width, ctx.height);
+}
+
 var tabListener = function (tab) {
   if (tab.url !== undefined) {
     getTabSource(tab.url, function (source, bias) {
       var path = '/icon.png';
+      var score = 0;
+      var args = [];
       if (source === undefined || bias === undefined) {
         browser.pageAction.hide(tab.id);
+        browser.pageAction.setIcon({
+          path: path,
+          tabId: tab.id
+        });
       } else {
-        path = '/icons/';
         switch (source.bias) {
           case 'left':
-            path += 'left';
+            args.push("L");
+            score += 40;
             break;
           case 'leftcenter':
           case 'left-center':
-            path += 'left-center';
+            args.push("LC");
+            score += 50;
             break;
           case 'center':
-            path += 'center';
+            args.push("C");
+            score += 60;
             break;
           case 'rightcenter':
           case 'right-center':
-            path += 'right-center';
+            args.push("RC");
+            score += 50;
             break;
           case 'right':
-            path += 'right';
+            args.push("R");
+            score += 40;
             break;
           case 'pro-science':
-            path += 'pro-science';
+            args.push("PS");
+            score += 50;
             break;
           case 'conspiracy':
-            path += 'conspiracy-pseudoscience';
+            args.push("CP");
+            score = 30;
             break;
           case 'satire':
-            path += 'satire';
+            args.push("S");
+            score = 20;
             break;
           case 'fake-news':
-            path += 'fake-news';
+            args.push("FN");
+            score = 30;
             break;
         }
-        path += '.png';
+        switch (source.factual) {
+          case 'LOW':
+            score += 10;
+            break;
+          case 'MIXED':
+            score += 20;
+            break;
+          case 'HIGH':
+            score += 30;
+            break;
+          case 'VERY HIGH':
+            score += 40;
+            break;
+          case '':
+          case null:
+          default:
+            break;
+        }
+        args.push(convertScoreToColor(score));
         browser.pageAction.show(tab.id);
         browser.pageAction.setTitle({
-          title: bias.name,
+          title: bias.name+" | Truthiness: "+(source.factual||"NR"),
+          tabId: tab.id
+        });
+        browser.pageAction.setIcon({
+          imageData: getImageData(...args),
           tabId: tab.id
         });
       }
-      browser.pageAction.setIcon({
-        path: path,
-        tabId: tab.id
-      });
     });
   }
 }
