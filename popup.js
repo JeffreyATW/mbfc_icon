@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('bias').textContent = bias.name;
         document.getElementById('description').textContent = bias.description;
         document.getElementById('name').textContent = source.name;
+        document.getElementById('factual').textContent = source.factual;
         document.getElementById('notes').textContent = source.notes;
         document.getElementById('homepage').setAttribute('href', source.homepage);
         document.getElementById('more-info').setAttribute('href', source.url);
