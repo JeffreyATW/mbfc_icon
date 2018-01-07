@@ -7,7 +7,7 @@ var getFile = function (type) {
       browser.storage.local.set(obj);
     }
   };
-  xhr.open('GET', 'http://jeffreyatw.com/static/mbfc/' + type + '.json', true);
+  xhr.open('GET', 'https://jeffreyatw.com/static/mbfc/' + type + '.json', true);
   xhr.send();
 }
 
