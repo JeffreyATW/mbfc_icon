@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
  This page is shown when the extension button is clicked, because the
  "browser_action" field in manifest.json contains the "default_popup" key with
@@ -15,6 +15,22 @@
       h1 {
         margin-top: 0;
       }
+
+      #factual {
+        font-weight: bold;
+      }
+
+      .HIGH {
+        color: #008000;
+      }
+
+      .MIXED {
+        color: #f60;
+      }
+
+      .LOW {
+        color: #f00;
+      }
     </style>
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
@@ -30,6 +46,7 @@
     <h1 id="bias"></h1>
     <p id="description"></p>
     <h2 id="name"></h2>
+    <p id="factualParagraph">Factual reporting: <span id="factual"></span></p>
     <p id="notes"></p>
     <ul>
       <li>
