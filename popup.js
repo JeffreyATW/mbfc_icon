@@ -54,8 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
           document.getElementById('bias').textContent = bias.name;
           document.getElementById('description').textContent = bias.description;
-          document.getElementById('name').textContent = source.name;
-          document.getElementById('notes').textContent = source.notes;
+          document.getElementById('homepage').textContent = source.name;
           document.getElementById('homepage').setAttribute('href', source.homepage);
           document.getElementById('more-info').setAttribute('href', source.url);
           var factualParagraph = document.getElementById('factualParagraph');
