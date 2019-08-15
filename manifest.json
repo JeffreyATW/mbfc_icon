@@ -3,11 +3,14 @@
 
   "name": "Official Media Bias Fact Check Icon",
   "description": "This extension shows an icon denoting the political bias for the current page.",
-  "version": "1.6.0",
+  "version": "1.7.0",
 
   "background": {
     "scripts": ["browser.js", "getTabSource.js", "eventPage.js"],
     "persistent": false
+  },
+  "icons": {
+    "128": "icon.png"
   },
   "page_action": {
     "default_icon": "icon.png",

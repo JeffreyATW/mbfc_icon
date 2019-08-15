@@ -54,8 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
           document.getElementById('bias').textContent = bias.name;
           document.getElementById('description').textContent = bias.description;
-          document.getElementById('homepage').textContent = source.name;
-          document.getElementById('homepage').setAttribute('href', source.homepage);
           document.getElementById('more-info').setAttribute('href', source.url);
           var factualParagraph = document.getElementById('factualParagraph');
           var factualEl = document.getElementById('factual');
@@ -64,7 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
           } else {
             factualParagraph.style.display = 'block';
             factualEl.textContent = source.factual;
-            factualEl.classList.add([source.factual]);
+            // change MOSTLY FACTUAL to MOSTLY
+            factualEl.classList.add([source.factual.split(' ')[0]]);
           }
           document.body.style.display = 'block';
         }, 50);
