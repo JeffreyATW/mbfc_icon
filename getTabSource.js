@@ -26,28 +26,21 @@ var getTabSource = function (url, cb) {
       // check if value is an array or object
       if (domainSources) {
         if (domainSources.length) {
-          // if array has more than one value
-          if (domainSources.length > 1) {
-            // iterate
-            for (var i = 0; i < domainSources.length; i += 1) {
-              // if source hasn't been set, settle for root path
-              if (domainSources[i].path === '/' && source === undefined) {
+          for (var i = 0; i < domainSources.length; i += 1) {
+            // if source hasn't been set, settle for root path
+            if (domainSources[i].path === '/' && source === undefined) {
+              source = domainSources[i];
+            } else {
+              // check for source's path at beginning of current path
+              if (path.indexOf(domainSources[i].path) === 0) {
                 source = domainSources[i];
-              } else {
-                // check for source's path at beginning of current path
-                if (path.indexOf(domainSources[i].path) === 0) {
-                  source = domainSources[i];
-                  // we found it, no need to iterate further
-                  break;
-                }
+                // we found it, no need to iterate further
+                break;
               }
             }
-            /* note: source could still be undefined if no domain source paths
-              were found in current path */
-          } else {
-            // just match with domain if only one value
-            source = domainSources[0];
           }
+          /* note: source could still be undefined if no domain source paths
+            were found in current path */
         } else {
           // not an array, must be slurping old JSON
           source = domainSources;
